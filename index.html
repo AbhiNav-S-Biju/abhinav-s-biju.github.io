@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abhinav S Biju</title>
+  <meta name="description" content="Abhinav S Biju — B.Tech CSIT student at REVA University. Projects, contributions and contact.">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    // Pick the theme before first paint so there is no flash.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <noscript><style>.loader{display:none}</style></noscript>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" role="status" aria-live="polite">
+    <div class="loader__sheet">
+      <p class="loader__name">Abhinav S Biju</p>
+      <div class="loader__bar" aria-hidden="true">
+        <svg viewBox="0 0 300 34" preserveAspectRatio="none" class="loader__frame">
+          <path d="M3 5 C 80 2, 200 6, 297 3 L 296 30 C 210 32, 90 29, 4 31 Z" />
+        </svg>
+        <div class="loader__fill" id="loaderFill"></div>
+      </div>
+      <p class="loader__count"><span class="sr-only">Loading </span><span id="loaderCount">0</span>%<span aria-hidden="true"> — sharpening pencils</span></p>
+    </div>
+  </div>
+
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page" id="page">
+    <header class="nav" id="nav">
+      <a class="nav__brand" href="#top" aria-label="Abhinav S Biju, back to top">Abhinav<span class="nav__dot">.</span></a>
+      <nav aria-label="Sections">
+        <ul class="nav__links">
+          <li><a href="#about">about</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#contributions">contributions</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- Opening -->
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__statement">
+          <p class="hero__hello"><span class="hl">Hi, I'm Abhinav S Biju</span></p>
+          <h1 class="hero__title" id="hero-title">
+            I build software that keeps working
+            <span class="hero__when">
+              when things don't.
+              <svg class="scribble-underline" viewBox="0 0 400 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 70 6, 150 18, 230 9 S 360 6, 396 12" /></svg>
+            </span>
+          </h1>
+
+          <div class="hero__actions">
+            <svg class="hero__arrow" viewBox="0 0 120 80" aria-hidden="true"><path d="M8 10 C 30 60, 70 70, 104 52" /><path d="M90 42 L 106 52 L 92 64" /></svg>
+            <a class="btn btn--red" href="#projects">See my work</a>
+            <a class="btn" href="https://github.com/AbhiNav-S-Biju" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="hero__cluster">
+          <figure class="mount mount--photo">
+            <span class="tape tape--tl" aria-hidden="true"></span>
+            <span class="tape tape--br" aria-hidden="true"></span>
+            <img src="assets/abhinav.jpg" width="900" height="898" alt="Abhinav sitting on a boulder by the sea, waves breaking behind him" fetchpriority="high">
+            <figcaption>by the sea, mid-thought</figcaption>
+          </figure>
+          <p class="note note--blue">
+            B.Tech in <strong>Computer Science &amp; Information Technology</strong>
+            <span class="note__sub">@ REVA University</span>
+          </p>
+          <p class="note note--scrap">
+            currently building <strong>VENMA</strong>, a PDF reader with a cat who explains things
+          </p>
+        </div>
+
+        <div class="facts">
+          <svg class="facts__bracket" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 26 C 6 12, 14 10, 40 11 L 280 12 C 292 12, 296 8, 300 3 C 304 8, 308 12, 320 12 L 560 11 C 586 11, 594 13, 596 26" /></svg>
+          <dl class="facts__list">
+            <div><dt>3</dt><dd>projects on GitHub</dd></div>
+            <div><dt>2</dt><dd>you can open live today</dd></div>
+            <div><dt>SIH</dt><dd>Smart India Hackathon build</dd></div>
+            <div><dt>5+</dt><dd>languages I ship in</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about" id="about" aria-labelledby="about-title">
+        <h2 class="heading" id="about-title"><span class="marker">About me</span></h2>
+        <div class="thoughts">
+          <p class="thought">I'm a Computer Science &amp; Information Technology student at <strong>REVA University</strong>. I learn best by building something real and then fixing it until it actually holds up.</p>
+          <p class="thought">The projects I care about are the ones somebody leans on: an app an elder can use with the Wi-Fi off, a PDF reader that explains the hard paragraph, a vault that hands your digital life to the right person.</p>
+          <p class="thought">I work across the stack — <span class="hl">Flutter and React</span> on the front, <span class="hl">Node, Express and Postgres</span> behind it — and I like it when the details people never notice are the ones that got the most care.</p>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <h2 class="heading" id="projects-title"><span class="marker">Things I've built</span></h2>
+        <p class="heading__note">from <a href="https://github.com/AbhiNav-S-Biju?tab=repositories" target="_blank" rel="noopener">github.com/AbhiNav-S-Biju</a></p>
+
+        <!-- NIRVANA -->
+        <article class="project">
+          <div class="project__visual">
+            <figure class="mount mount--shot">
+              <span class="tape tape--tc" aria-hidden="true"></span>
+              <img src="assets/nirvana.jpg" width="1200" height="732" loading="lazy" alt="NIRVANA welcome screen with two choices: a purple Patient Portal marked senior friendly, and a teal Caregiver Portal">
+            </figure>
+          </div>
+          <div class="project__body">
+            <p class="project__tag">Smart India Hackathon · Flutter</p>
+            <h3 class="project__title">NIRVANA</h3>
+            <p>An offline-first companion and care app for elders, with a live portal for the family caregiver. Reminders, memory games and preferences all keep working with the network unplugged, then sync the moment a connection returns.</p>
+            <ul class="checks">
+              <li>Exact on-device reminders with <em>Done · Snooze · Later</em> right from the notification</li>
+              <li>Three gentle memory games that never say "failed"</li>
+              <li>One-tap "I'm lost" location sharing and a caregiver dashboard</li>
+              <li>Voice in and out, in English, हिन्दी, বাংলা, ଓଡ଼ିଆ and more</li>
+            </ul>
+            <p class="stack">Flutter · Dart · Hive · PostgreSQL · Node</p>
+            <div class="project__links">
+              <a class="btn btn--red" href="https://abhinav-s-biju.github.io/S_I_H/" target="_blank" rel="noopener">Live demo ↗</a>
+              <a class="btn" href="https://github.com/AbhiNav-S-Biju/S_I_H" target="_blank" rel="noopener">Code</a>
+              <a class="link" href="https://github.com/AbhiNav-S-Biju/S_I_H/releases" target="_blank" rel="noopener">Android APK</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- VENMA -->
+        <article class="project project--flip">
+          <div class="project__visual">
+            <figure class="mount mount--shot">
+              <span class="tape tape--tl" aria-hidden="true"></span>
+              <img src="assets/venma-reading.jpg" width="800" height="500" loading="lazy" alt="VENMA workspace: a PDF on photosynthesis with colour highlights, and the VENMA panel summarising a selected passage, a lavender cat in the corner">
+            </figure>
+          </div>
+          <div class="project__body">
+            <p class="project__tag">Chrome extension · TypeScript</p>
+            <h3 class="project__title">VENMA AI PDF Viewer</h3>
+            <p>A reading desk with a companion. Open a PDF, highlight as you go, and select any passage to ask VENMA — a lavender cat who lives on your desk — for an explanation, an example, a summary or study notes.</p>
+            <ul class="checks">
+              <li>Highlights and notes saved in the browser, re-attached when the PDF reopens</li>
+              <li>Answers can be pinned to the page as notes</li>
+              <li>No API keys in the extension: a small local server picks a reachable model (Ollama, OpenRouter, Groq, Gemini)</li>
+              <li>The cat breathes, blinks and follows your cursor — and holds still for reduced motion</li>
+            </ul>
+            <p class="stack">React · TypeScript · pdf.js · pdf-lib · IndexedDB · Express</p>
+            <div class="project__links">
+              <a class="btn btn--red" href="https://github.com/AbhiNav-S-Biju/VENMA-AI-pdf-viewer" target="_blank" rel="noopener">Code ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- DIGIPASS -->
+        <article class="project">
+          <div class="project__visual">
+            <figure class="mount mount--shot mount--tilt-r">
+              <span class="tape tape--tr" aria-hidden="true"></span>
+              <img src="assets/digipass.jpg" width="1280" height="800" loading="lazy" alt="DIGIPASS landing page: 'Your digital life, secured forever' beside an illustrated vault">
+            </figure>
+          </div>
+          <div class="project__body">
+            <p class="project__tag">Full stack · Node &amp; PostgreSQL</p>
+            <h3 class="project__title">DIGIPASS</h3>
+            <p>A digital estate manager. Store your accounts, name trusted executors, and let DIGIPASS generate a digital will — with a dead man's switch that delivers it if you stop checking in.</p>
+            <ul class="checks">
+              <li>Executor portal with identity verification and controlled access</li>
+              <li>Automatic PDF will generation</li>
+              <li>Scheduled check-ins and a full activity log</li>
+              <li>bcrypt passwords, JWT sessions, parameterised SQL</li>
+            </ul>
+            <p class="stack">Node.js · Express · PostgreSQL (Neon) · Python · Vercel</p>
+            <div class="project__links">
+              <a class="btn btn--red" href="https://digipass-pi.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
+              <a class="btn" href="https://github.com/AbhiNav-S-Biju/Digipass" target="_blank" rel="noopener">Code</a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Process -->
+      <section class="process-wrap" aria-labelledby="process-title">
+        <h2 class="heading" id="process-title"><span class="marker">What my projects keep coming back to</span></h2>
+        <ol class="process">
+          <li><span class="circled" aria-hidden="true">1</span><strong>Start with the person</strong> Big targets and no timers for elders; a cat that explains instead of a chatbot box.</li>
+          <li><span class="circled" aria-hidden="true">2</span><strong>Work without the network</strong> Local storage as the source of truth, a local model when there is one.</li>
+          <li><span class="circled" aria-hidden="true">3</span><strong>Keep secrets on the server</strong> Keys and passwords stay out of the client.</li>
+          <li><span class="circled" aria-hidden="true">4</span><strong>Ship something you can open</strong> A live link or an APK, not just a repo.</li>
+        </ol>
+      </section>
+
+      <!-- Contributions -->
+      <section class="contrib" id="contributions" aria-labelledby="contrib-title">
+        <h2 class="heading" id="contrib-title"><span class="marker">Contributions</span></h2>
+        <p class="heading__note">work on repositories that aren't mine</p>
+        <div class="contrib__list">
+          <article class="speech">
+            <p class="speech__repo"><a href="https://github.com/jrush-vj/hackstreet-boys" target="_blank" rel="noopener">jrush-vj / hackstreet-boys</a></p>
+            <p>Team repository — added as a collaborator and pushing to the shared codebase with the rest of the team.</p>
+            <p class="stack">Collaborator · team project</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Toolbox -->
+      <section class="toolbox" aria-labelledby="toolbox-title">
+        <h2 class="heading" id="toolbox-title"><span class="marker">My toolbox</span></h2>
+        <div class="ledger">
+          <div class="ledger__row ledger__row--hot">
+            <h3>Languages</h3>
+            <p>JavaScript · TypeScript · Dart · Java · Python · SQL</p>
+          </div>
+          <div class="ledger__row">
+            <h3>Front end &amp; apps</h3>
+            <p>React · Flutter · Chrome extensions · pdf.js · HTML &amp; CSS</p>
+          </div>
+          <div class="ledger__row">
+            <h3>Back end &amp; data</h3>
+            <p>Node.js · Express · PostgreSQL · Hive · IndexedDB · JWT &amp; bcrypt</p>
+          </div>
+          <div class="ledger__row">
+            <h3>Tools</h3>
+            <p>Git &amp; GitHub · Vite · Vercel · Ollama</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <h2 class="contact__title" id="contact-title">Got something worth building? Let's talk.</h2>
+        <div class="contact__actions">
+          <a class="btn btn--red" id="emailBtn" href="#" hidden>Email me</a>
+          <a class="btn" href="https://github.com/AbhiNav-S-Biju" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" id="linkedinBtn" href="#" target="_blank" rel="noopener" hidden>LinkedIn ↗</a>
+        </div>
+
+        <form class="mail" id="mailForm" novalidate>
+          <p class="mail__intro">…or leave a note right here. It lands straight in my inbox.</p>
+          <div class="mail__row">
+            <div class="field">
+              <label for="mfName">your name</label>
+              <input id="mfName" name="name" type="text" autocomplete="name" required maxlength="80">
+            </div>
+            <div class="field">
+              <label for="mfEmail">your email <span class="field__hint">(so I can reply)</span></label>
+              <input id="mfEmail" name="email" type="email" autocomplete="email" required maxlength="120">
+            </div>
+          </div>
+          <div class="field field--note">
+            <label for="mfNote">your note</label>
+            <div class="mail__stage" id="mailStage">
+              <textarea id="mfNote" name="message" rows="6" required maxlength="2000"></textarea>
+            </div>
+          </div>
+          <input type="text" name="_honey" class="mail__honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="mail__error" id="mailError" role="alert"></p>
+          <div class="mail__send" id="mailSendWrap">
+            <button class="btn btn--red mail__btn" id="mailSend" type="submit">Send it ✈</button>
+          </div>
+          <p class="sr-only" id="mailStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <p class="footer__name">Abhinav S Biju</p>
+        <p>B.Tech CSIT · REVA University</p>
+      </div>
+      <div>
+        <p class="footer__label">elsewhere</p>
+        <p><a href="https://github.com/AbhiNav-S-Biju" target="_blank" rel="noopener">GitHub</a></p>
+        <p><a href="https://www.linkedin.com/in/abhinav-s-biju-a8aa96331" target="_blank" rel="noopener">LinkedIn</a></p>
+      </div>
+      <p class="footer__small">drawn by hand, built with code · <span id="year">2026</span></p>
+    </footer>
+  </div>
+
+  <!-- Theme switch: drag it, or press it -->
+  <button class="theme-handle" id="themeHandle" type="button">
+    <span class="theme-handle__grip" aria-hidden="true"></span>
+    <span class="theme-handle__label" id="themeLabel">night</span>
+    <span class="sr-only" id="themeSr">Switch to dark mode. You can also drag this handle across the page.</span>
+  </button>
+  <canvas class="spray" id="spray" aria-hidden="true"></canvas>
+
+  <!-- Filter used by the slider for motion blur + colour split -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="bendFx" x="-10%" y="0" width="120%" height="100%" color-interpolation-filters="sRGB">
+      <feGaussianBlur id="bendBlur" in="SourceGraphic" stdDeviation="0 0" result="b" />
+      <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
+      <feOffset id="bendOffR" in="r" dx="0" result="ro" />
+      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g" />
+      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bl" />
+      <feOffset id="bendOffB" in="bl" dx="0" result="bo" />
+      <feBlend in="ro" in2="g" mode="screen" result="rg" />
+      <feBlend in="rg" in2="bo" mode="screen" />
+    </filter>
+  </svg>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/bend-slider.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/paper-mail.js"></script>
+</body>
+</html>
