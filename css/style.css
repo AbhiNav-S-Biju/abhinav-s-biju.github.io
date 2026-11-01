@@ -234,7 +234,6 @@ main > section {
 .mount img { width: 100%; }
 .mount figcaption { font-size: 19px; color: var(--dp-color-ink-muted); text-align: center; padding-top: 8px; }
 .mount--photo img { aspect-ratio: 1 / 1; object-fit: cover; object-position: 45% 40%; }
-.mount--tilt-r { transform: rotate(1.4deg); }
 
 .tape {
   position: absolute; width: 96px; height: 26px;
@@ -277,23 +276,49 @@ main > section {
 .thought:nth-child(2) { padding-left: 4%; }
 
 /* ============ Projects ============ */
-.project {
-  display: grid; gap: 32px;
-  padding: 40px 0 56px;
-  border-bottom: 1.5px dashed var(--dp-color-line);
-}
-.project:last-child { border-bottom: 0; }
-.project__visual { max-width: 560px; }
-.mount--shot { padding: 10px; }
-.mount--draw { padding: 18px; background: var(--dp-color-scrap); }
-.drawing { width: 100%; height: auto; display: block; }
-.drawing path, .drawing rect, .drawing circle { fill: none; stroke: var(--dp-color-ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.drawing .ink-blue { stroke: var(--dp-color-annotation); }
-.drawing .ink-red { stroke: var(--dp-color-accent); }
+.projects__grid { display: grid; gap: 44px 28px; margin-top: 8px; }
+.pcard { --rot: -1deg; transform: rotate(var(--rot)); }
+.pcard:nth-child(2) { --rot: 1deg; }
+.pcard:nth-child(3) { --rot: -0.6deg; }
 
-.project__tag { color: var(--dp-color-annotation); font-size: var(--dp-typography-detail); margin-bottom: 4px; }
-.project__title { font-size: clamp(42px, 7vw, 60px); margin-bottom: 14px; transform: rotate(-1deg); display: inline-block; }
-.project__body > p { font-size: var(--dp-typography-reading); }
+/* 3D card: perspective on the outer box, tilt on the inner one, items lift toward you on hover. */
+.card3d { perspective: 1000px; }
+.card3d__inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 200ms linear;
+}
+.card3d__body {
+  position: relative;
+  display: grid; gap: 14px;
+  padding: 16px 16px 18px;
+  background: var(--dp-color-scrap);
+  border: var(--dp-border-fine-stroke) solid var(--dp-color-ink);
+  border-radius: 14px 5px 20px 7px / 6px 16px 6px 14px;
+  box-shadow: 4px 4px 0 var(--dp-color-line);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: box-shadow 200ms linear;
+}
+.card3d__body > * { transform-style: preserve-3d; }
+.card3d:hover .card3d__body,
+.card3d__body:has(.card3d__open:focus-visible) { box-shadow: 8px 9px 0 var(--dp-color-line); }
+.card3d__item { transition: transform 200ms linear; }
+.card3d.is-hover .card3d__item { transform: translateZ(var(--z, 0px)); }
+
+.card3d__pic { padding: 8px; background: var(--dp-color-ground); border: 1px solid var(--dp-color-line); }
+.card3d__pic img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+/* the real picture and title sit out while their copies fly to or from the popup */
+.card3d.is-flying .card3d__pic, .card3d.is-flying .card3d__title { visibility: hidden; }
+.card3d__title { font-size: clamp(34px, 4vw, 42px); line-height: 1.05; width: fit-content; max-width: 100%; }
+.card3d__open {
+  font: inherit; color: var(--dp-color-ink); text-align: left;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+.card3d__open:hover { color: var(--dp-color-accent); }
+.card3d__row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.card3d__hint { color: var(--dp-color-annotation); font-size: var(--dp-typography-detail); }
+
 .checks { list-style: none; padding: 0; margin: 14px 0 18px; display: grid; gap: 8px; }
 .checks li { position: relative; padding-left: 34px; font-size: var(--dp-typography-detail); line-height: 1.4; }
 .checks li::before {
@@ -303,7 +328,51 @@ main > section {
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Cpath d='M2 9 L7 14 L18 2' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 .stack { font-size: var(--dp-typography-detail); color: var(--dp-color-ink-muted); border-top: 1.5px solid var(--dp-color-line); padding-top: 8px; display: inline-block; }
-.project__links { display: flex; flex-wrap: wrap; gap: 14px 16px; align-items: center; margin-top: 10px; }
+
+/* ============ Project popup ============ */
+html { scrollbar-gutter: stable; }
+html:has(dialog.modal[open]) { overflow: hidden; }
+dialog.modal {
+  width: 100%; height: 100%; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; overflow: hidden;
+  background: transparent; color: var(--dp-color-ink);
+}
+dialog.modal[open] { display: grid; place-items: center; padding: 16px; }
+.modal::backdrop { background: color-mix(in srgb, #14120f 62%, transparent); }
+.modal__panel {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 24px 18px 28px;
+  background: var(--dp-color-scrap);
+  color: var(--dp-color-ink);
+  font-family: var(--dp-typography-reading-face);
+  font-size: var(--dp-typography-body);
+  line-height: 1.5;
+  border: var(--dp-border-fine-stroke) solid var(--dp-color-ink);
+  border-radius: 18px 6px 24px 8px / 8px 20px 7px 18px;
+  box-shadow: 5px 6px 0 var(--dp-color-accent);
+}
+dialog.modal[open]::backdrop { animation: backdropIn 700ms ease-out; }
+dialog.modal.is-closing::backdrop { animation: backdropOut 700ms ease-in forwards; }
+@keyframes backdropIn { from { opacity: 0; } }
+@keyframes backdropOut { to { opacity: 0; } }
+/* zero-height sticky row, so the Close button floats over the picture without pushing it down */
+.modal__bar { position: sticky; top: 10px; height: 0; z-index: 3; display: flex; justify-content: flex-end; }
+.modal__close { min-height: 44px; font-size: 20px; margin: 10px 10px 0 0; }
+/* same frame as the card's picture, so the flying copy lands exactly on it */
+.modal__pic { padding: 8px; margin: 0 0 16px; background: var(--dp-color-ground); border: 1px solid var(--dp-color-line); }
+.modal__pic img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+.modal__tag { color: var(--dp-color-annotation); font-size: var(--dp-typography-detail); margin: 0 0 2px; }
+.modal__title { font-family: var(--dp-typography-display-face); font-weight: 400; font-size: clamp(38px, 6vw, 50px); line-height: 1.05; margin-bottom: 14px; }
+/* flying copies: they live in the dialog but are positioned against the viewport */
+.modal .ghost { position: fixed; margin: 0; pointer-events: none; z-index: 5; }
+.modal .ghost.modal__title { color: var(--dp-color-ink); }
+.modal__sub { font-size: 30px; margin: 22px 0 4px; color: var(--dp-color-annotation); }
+.modal__panel p { font-size: var(--dp-typography-reading); }
+.modal__panel .checks { margin-top: 8px; }
+.modal__links { display: flex; flex-wrap: wrap; gap: 14px 16px; align-items: center; margin-top: 16px; }
 
 /* ============ Process strip ============ */
 .process-wrap { position: relative; }
@@ -516,7 +585,7 @@ main > section {
   position: absolute; inset: 0; overflow: hidden;
   will-change: transform;
 }
-.bend-overlay__fx > .page { position: absolute; left: 0; right: 0; }
+.bend-overlay__fx > .page { position: absolute; }
 
 .spray { position: fixed; inset: 0; z-index: 115; pointer-events: none; width: 100vw; height: 100vh; }
 
@@ -525,11 +594,10 @@ main > section {
   :root { --gutter: 32px; }
   main > section { padding-top: 96px; padding-bottom: 96px; }
   .facts__list { grid-template-columns: repeat(4, 1fr); }
+  .projects__grid { grid-template-columns: 1fr 1fr; }
+  .modal__panel { padding: 30px 34px 34px; }
   .hero__cluster { grid-template-columns: 1.15fr 1fr; max-width: none; align-items: start; }
   .hero__cluster .mount--photo { grid-row: span 2; }
-  .project { grid-template-columns: 1fr 1fr; align-items: start; }
-  .project--flip .project__visual { order: 2; }
-  .project__visual { margin-top: 24px; }
   .process { grid-template-columns: 1fr 1fr; padding: 40px 34px; }
   .ledger__row { grid-template-columns: 240px 1fr; align-items: baseline; padding: 20px 18px; }
   .footer { grid-template-columns: 2fr 1fr 2fr; }
@@ -550,12 +618,11 @@ main > section {
   .hero__cluster .note--blue { margin: -6px 0 0 -90px; width: 260px; background: var(--dp-color-ground); position: relative; z-index: 3; }
   .hero__cluster .note--scrap { margin-left: 60px; }
   .facts { grid-area: facts; }
+  .projects__grid { grid-template-columns: repeat(3, 1fr); }
+  .pcard:nth-child(2) { margin-top: 48px; }
   .hero__arrow { display: block; position: absolute; left: -96px; top: -34px; width: 96px; height: 64px; }
   .hero__actions { margin-left: 104px; }
 
-  .project { grid-template-columns: 1.05fr 1fr; gap: 64px; }
-  .project:nth-of-type(2) { margin-left: 4%; }
-  .project__visual { margin-top: 40px; }
 
   .process { grid-template-columns: repeat(4, 1fr); gap: 40px; padding: 44px 40px; }
   .process li:not(:last-child)::after {
@@ -569,7 +636,7 @@ main > section {
 
 /* Small screens: calmer rotations */
 @media (max-width: 679px) {
-  .mount, .note--blue, .note--scrap, .speech, .process, .heading, .project__title { transform: rotate(0deg); }
+  .mount, .note--blue, .note--scrap, .speech, .process, .heading, .modal__title { transform: rotate(0deg); }
   .mount--photo { transform: rotate(-0.6deg); }
 }
 

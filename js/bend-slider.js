@@ -2,18 +2,23 @@
  * BendSlider — a before/after divider for any two full-screen views.
  *
  * Drag the handle and a divider follows the pointer. The divider bends with
- * the drag speed, the incoming view slides in with motion blur and an RGB
- * split, and dots spray off the line. Release past halfway (or flick) to
- * commit to the other view; otherwise it springs back.
+ * the drag speed, the incoming view slides in with motion blur, a red/blue
+ * colour split fringes the divider, and dots spray off the line. Release past
+ * halfway (or flick) to commit to the other view; otherwise it springs back.
+ *
+ * Cost control: the blur is a plain CSS blur (GPU, works in every browser) and the
+ * colour split is drawn on the canvas, instead of an SVG filter over the whole view,
+ * which was slow on large screens and unsupported on HTML content in Safari. If frames
+ * still come in slow, it drops to a lite mode (no blur, fewer dots) and stays there.
  *
  *   new BendSlider({
  *     handle,          // element that starts the drag (a <button>; click/Enter sweeps)
  *     canvas,          // full-viewport <canvas> for the divider and the spray
- *     buildView,       // () => Element: the "after" view, laid out for the viewport
+ *     buildView,       // (bleed) => Element: the "after" view, laid out for the viewport and
+ *                      //   offset by `bleed` px on both axes (room for the blur at the edges)
  *     onCommit,        // () => void: make the "after" view the real one
  *     onStart, onEnd,  // optional hooks (e.g. pause smooth scrolling)
  *     colors,          // () => [lineColour, ...sprayColours]
- *     filter,          // { el: <filter> id string, blur, offR, offB } (SVG nodes)
  *     reducedMotion,   // () => boolean
  *   });
  */
@@ -22,6 +27,11 @@
 
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
+
+  var BLEED = 24;            // px the view extends past the viewport so a blur doesn't fade the edges
+  var MAX_PARTICLES = 140;
+  var SLOW_FRAME_MS = 28;    // average frame time that triggers lite mode
+  var canBlur = !!(window.CSS && CSS.supports && CSS.supports('filter', 'blur(2px)'));
 
   function BendSlider(opts) {
     this.o = opts;
@@ -35,6 +45,7 @@
     this.x = 0; this.prevX = 0; this.vel = 0; this.bend = 0;
     this.py = 0; this.target = null;
     this.suppressClick = false;
+    this.lite = false;        // set once frames prove slow; stays on for later drags
     this._tick = this._tick.bind(this);
     this._bind();
   }
@@ -101,7 +112,8 @@
     this.vel = 0; this.bend = 0; this.py = py; this.target = null;
     this.stiffness = 0.16;
 
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.last = 0; this.ema = 0; this.frames = 0; this.blurNow = 0; this.clipNow = '';
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     this.canvas.width = this.W * dpr;
     this.canvas.height = this.H * dpr;
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -115,7 +127,8 @@
     overlay.inert = true;
     var fx = document.createElement('div');
     fx.className = 'bend-overlay__fx';
-    fx.appendChild(this.o.buildView());
+    fx.style.inset = -BLEED + 'px';
+    fx.appendChild(this.o.buildView(BLEED));
     overlay.appendChild(fx);
     document.body.appendChild(overlay);
     this.overlay = overlay; this.fx = fx;
@@ -146,9 +159,21 @@
     if (!this.running) { this.running = true; requestAnimationFrame(this._tick); }
   };
 
-  BendSlider.prototype._tick = function () {
+  BendSlider.prototype._tick = function (now) {
     var reduced = this._reduced();
     if (this.active) {
+      // Watch the frame rate while dragging; on a slow machine switch the heavy bits off.
+      if (this.last) {
+        var dt = now - this.last;
+        this.ema = this.ema ? this.ema * 0.85 + dt * 0.15 : dt;
+        if (++this.frames > 12 && this.ema > SLOW_FRAME_MS && !this.lite) {
+          this.lite = true;
+          this.fx.style.filter = 'none';
+          this.blurNow = 0;
+        }
+      }
+      this.last = now;
+
       if (this.target !== null) {
         this.x = lerp(this.x, this.target, this.stiffness);
         if (Math.abs(this.x - this.target) < 0.6) this.x = this.target;
@@ -198,25 +223,23 @@
 
   BendSlider.prototype._paintOverlay = function (reduced) {
     var c = this._curve(), W = this.W, H = this.H;
-    this.overlay.style.clipPath = "path('" + c.d + ' L' + (W + 400) + ' ' + H + ' L' + (W + 400) + " 0 Z')";
+    // Only touch the style when the shape really moved: every clip change repaints a mask.
+    var clip = "path('" + c.d + ' L' + (W + 400) + ' ' + H + ' L' + (W + 400) + " 0 Z')";
+    if (clip !== this.clipNow) { this.overlay.style.clipPath = clip; this.clipNow = clip; }
 
     if (reduced) { this.fx.style.transform = 'none'; this.fx.style.filter = 'none'; return; }
 
     // The incoming view slides into place as it is revealed, faster with speed.
     var slide = (this.x / W) * 60 + clamp(this.vel * 2.2, -70, 70);
-    this.fx.style.transform = 'translate3d(' + slide.toFixed(2) + 'px,0,0)';
+    this.fx.style.transform = 'translate3d(' + slide.toFixed(1) + 'px,0,0)';
 
-    var speed = Math.abs(this.vel);
-    var blur = clamp(speed * 0.45, 0, 12);
-    var split = clamp(this.vel * 0.35, -9, 9);
-    var f = this.o.filter;
-    if (f && (blur > 0.35 || Math.abs(split) > 0.35)) {
-      f.blur.setAttribute('stdDeviation', blur.toFixed(2) + ' 0');
-      f.offR.setAttribute('dx', split.toFixed(2));
-      f.offB.setAttribute('dx', (-split).toFixed(2));
-      this.fx.style.filter = 'url(#' + f.id + ')';
-    } else {
-      this.fx.style.filter = 'none';
+    // Motion blur: a plain CSS blur, stepped in halves so it isn't re-rendered every frame.
+    if (canBlur && !this.lite) {
+      var blur = Math.round(clamp(Math.abs(this.vel) * 0.3, 0, 6) * 2) / 2;
+      if (blur !== this.blurNow) {
+        this.fx.style.filter = blur >= 1 ? 'blur(' + blur + 'px)' : 'none';
+        this.blurNow = blur;
+      }
     }
   };
 
@@ -227,7 +250,8 @@
     // Spray
     if (this.active && !reduced) {
       var speed = Math.abs(this.vel);
-      var n = speed > 1.2 ? Math.min(Math.round(speed * 0.35), 7) : 0;
+      var n = speed > 1.2 ? Math.min(Math.round(speed * 0.35), this.lite ? 3 : 7) : 0;
+      if (this.particles.length > (this.lite ? 60 : MAX_PARTICLES)) n = 0;
       for (var i = 0; i < n; i++) {
         var t = Math.random();
         var p = this._pointAt(t);
@@ -260,15 +284,31 @@
     var c = this._curve();
     var path = new Path2D(c.d);
     ctx.lineCap = 'round';
+
+    // Colour split: a red and a blue ghost of the line, pulled apart by the drag speed.
+    var split = reduced || this.lite ? 0 : clamp(Math.abs(this.vel) * 0.45, 0, 10);
+    if (split > 0.8) {
+      ctx.save();
+      ctx.lineWidth = 2 + split * 0.5;
+      ctx.globalAlpha = 0.6;
+      ctx.strokeStyle = '#ff2d55';
+      ctx.translate(-split, 0); ctx.stroke(path);
+      ctx.strokeStyle = '#2d6bff';
+      ctx.translate(split * 2, 0); ctx.stroke(path);
+      ctx.restore();
+    }
+
     ctx.strokeStyle = this.lineColour;
     ctx.lineWidth = 2.2;
     ctx.stroke(path);
-    ctx.save();
-    ctx.translate(1.6, 0.8);
-    ctx.globalAlpha = 0.35;
-    ctx.lineWidth = 1;
-    ctx.stroke(path);
-    ctx.restore();
+    if (!this.lite) {
+      ctx.save();
+      ctx.translate(1.6, 0.8);
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = 1;
+      ctx.stroke(path);
+      ctx.restore();
+    }
 
     // Grab knob
     if (this.dragging || this.target !== null) {

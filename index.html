@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <noscript><style>.loader{display:none}</style></noscript>
 </head>
 <body>
@@ -114,85 +114,66 @@
       <!-- Projects -->
       <section class="projects" id="projects" aria-labelledby="projects-title">
         <h2 class="heading" id="projects-title"><span class="marker">Things I've built</span></h2>
-        <p class="heading__note">from <a href="https://github.com/AbhiNav-S-Biju?tab=repositories" target="_blank" rel="noopener">github.com/AbhiNav-S-Biju</a></p>
+        <p class="heading__note">from <a href="https://github.com/AbhiNav-S-Biju?tab=repositories" target="_blank" rel="noopener">github.com/AbhiNav-S-Biju</a> · click a card for the full story</p>
 
-        <!-- NIRVANA -->
-        <article class="project">
-          <div class="project__visual">
-            <figure class="mount mount--shot">
-              <span class="tape tape--tc" aria-hidden="true"></span>
-              <img src="assets/nirvana.jpg" width="1200" height="732" loading="lazy" alt="NIRVANA welcome screen with two choices: a purple Patient Portal marked senior friendly, and a teal Caregiver Portal">
-            </figure>
-          </div>
-          <div class="project__body">
-            <p class="project__tag">Smart India Hackathon · Flutter</p>
-            <h3 class="project__title">NIRVANA</h3>
-            <p>An offline-first companion and care app for elders, with a live portal for the family caregiver. Reminders, memory games and preferences all keep working with the network unplugged, then sync the moment a connection returns.</p>
-            <ul class="checks">
-              <li>Exact on-device reminders with <em>Done · Snooze · Later</em> right from the notification</li>
-              <li>Three gentle memory games that never say "failed"</li>
-              <li>One-tap "I'm lost" location sharing and a caregiver dashboard</li>
-              <li>Voice in and out, in English, हिन्दी, বাংলা, ଓଡ଼ିଆ and more</li>
-            </ul>
-            <p class="stack">Flutter · Dart · Hive · PostgreSQL · Node</p>
-            <div class="project__links">
-              <a class="btn btn--red" href="https://abhinav-s-biju.github.io/S_I_H/" target="_blank" rel="noopener">Live demo ↗</a>
-              <a class="btn" href="https://github.com/AbhiNav-S-Biju/S_I_H" target="_blank" rel="noopener">Code</a>
-              <a class="link" href="https://github.com/AbhiNav-S-Biju/S_I_H/releases" target="_blank" rel="noopener">Android APK</a>
+        <div class="projects__grid">
+          <!-- NIRVANA -->
+          <div class="pcard">
+            <div class="card3d" data-project="nirvana">
+              <div class="card3d__inner">
+                <article class="card3d__body">
+                  <span class="tape tape--tl" aria-hidden="true"></span>
+                  <div class="card3d__item card3d__pic" style="--z:80px">
+                    <img src="assets/nirvana.jpg" width="1200" height="732" loading="lazy" alt="NIRVANA welcome screen with two choices: a purple Patient Portal marked senior friendly, and a teal Caregiver Portal">
+                  </div>
+                  <h3 class="card3d__item card3d__title" style="--z:50px"><button type="button" class="card3d__open" aria-haspopup="dialog">NIRVANA</button></h3>
+                  <div class="card3d__row">
+                    <span class="card3d__item card3d__hint" style="--z:20px" aria-hidden="true">details →</span>
+                    <div class="card3d__item" style="--z:20px"><a class="btn btn--red" href="https://abhinav-s-biju.github.io/S_I_H/" target="_blank" rel="noopener" aria-label="Open NIRVANA live demo (opens in a new tab)">Open link ↗</a></div>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
-        </article>
 
-        <!-- VENMA -->
-        <article class="project project--flip">
-          <div class="project__visual">
-            <figure class="mount mount--shot">
-              <span class="tape tape--tl" aria-hidden="true"></span>
-              <img src="assets/venma-reading.jpg" width="800" height="500" loading="lazy" alt="VENMA workspace: a PDF on photosynthesis with colour highlights, and the VENMA panel summarising a selected passage, a lavender cat in the corner">
-            </figure>
-          </div>
-          <div class="project__body">
-            <p class="project__tag">Chrome extension · TypeScript</p>
-            <h3 class="project__title">VENMA AI PDF Viewer</h3>
-            <p>A reading desk with a companion. Open a PDF, highlight as you go, and select any passage to ask VENMA — a lavender cat who lives on your desk — for an explanation, an example, a summary or study notes.</p>
-            <ul class="checks">
-              <li>Highlights and notes saved in the browser, re-attached when the PDF reopens</li>
-              <li>Answers can be pinned to the page as notes</li>
-              <li>No API keys in the extension: a small local server picks a reachable model (Ollama, OpenRouter, Groq, Gemini)</li>
-              <li>The cat breathes, blinks and follows your cursor — and holds still for reduced motion</li>
-            </ul>
-            <p class="stack">React · TypeScript · pdf.js · pdf-lib · IndexedDB · Express</p>
-            <div class="project__links">
-              <a class="btn btn--red" href="https://github.com/AbhiNav-S-Biju/VENMA-AI-pdf-viewer" target="_blank" rel="noopener">Code ↗</a>
+          <!-- VENMA -->
+          <div class="pcard">
+            <div class="card3d" data-project="venma">
+              <div class="card3d__inner">
+                <article class="card3d__body">
+                  <span class="tape tape--tr" aria-hidden="true"></span>
+                  <div class="card3d__item card3d__pic" style="--z:80px">
+                    <img src="assets/venma-reading.jpg" width="800" height="500" loading="lazy" alt="VENMA workspace: a PDF on photosynthesis with colour highlights, and the VENMA panel summarising a selected passage, a lavender cat in the corner">
+                  </div>
+                  <h3 class="card3d__item card3d__title" style="--z:50px"><button type="button" class="card3d__open" aria-haspopup="dialog">VENMA AI PDF Viewer</button></h3>
+                  <div class="card3d__row">
+                    <span class="card3d__item card3d__hint" style="--z:20px" aria-hidden="true">details →</span>
+                    <div class="card3d__item" style="--z:20px"><a class="btn btn--red" href="https://github.com/AbhiNav-S-Biju/VENMA-AI-pdf-viewer" target="_blank" rel="noopener" aria-label="Open VENMA code on GitHub (opens in a new tab)">Open link ↗</a></div>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
-        </article>
 
-        <!-- DIGIPASS -->
-        <article class="project">
-          <div class="project__visual">
-            <figure class="mount mount--shot mount--tilt-r">
-              <span class="tape tape--tr" aria-hidden="true"></span>
-              <img src="assets/digipass.jpg" width="1280" height="800" loading="lazy" alt="DIGIPASS landing page: 'Your digital life, secured forever' beside an illustrated vault">
-            </figure>
-          </div>
-          <div class="project__body">
-            <p class="project__tag">Full stack · Node &amp; PostgreSQL</p>
-            <h3 class="project__title">DIGIPASS</h3>
-            <p>A digital estate manager. Store your accounts, name trusted executors, and let DIGIPASS generate a digital will — with a dead man's switch that delivers it if you stop checking in.</p>
-            <ul class="checks">
-              <li>Executor portal with identity verification and controlled access</li>
-              <li>Automatic PDF will generation</li>
-              <li>Scheduled check-ins and a full activity log</li>
-              <li>bcrypt passwords, JWT sessions, parameterised SQL</li>
-            </ul>
-            <p class="stack">Node.js · Express · PostgreSQL (Neon) · Python · Vercel</p>
-            <div class="project__links">
-              <a class="btn btn--red" href="https://digipass-pi.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
-              <a class="btn" href="https://github.com/AbhiNav-S-Biju/Digipass" target="_blank" rel="noopener">Code</a>
+          <!-- DIGIPASS -->
+          <div class="pcard">
+            <div class="card3d" data-project="digipass">
+              <div class="card3d__inner">
+                <article class="card3d__body">
+                  <span class="tape tape--tl" aria-hidden="true"></span>
+                  <div class="card3d__item card3d__pic" style="--z:80px">
+                    <img src="assets/digipass.jpg" width="1280" height="800" loading="lazy" alt="DIGIPASS landing page: 'Your digital life, secured forever' beside an illustrated vault">
+                  </div>
+                  <h3 class="card3d__item card3d__title" style="--z:50px"><button type="button" class="card3d__open" aria-haspopup="dialog">DIGIPASS</button></h3>
+                  <div class="card3d__row">
+                    <span class="card3d__item card3d__hint" style="--z:20px" aria-hidden="true">details →</span>
+                    <div class="card3d__item" style="--z:20px"><a class="btn btn--red" href="https://digipass-pi.vercel.app" target="_blank" rel="noopener" aria-label="Open the DIGIPASS live site (opens in a new tab)">Open link ↗</a></div>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
-        </article>
+        </div>
       </section>
 
       <!-- Process -->
@@ -293,6 +274,82 @@
     </footer>
   </div>
 
+  <!-- Project details popup -->
+  <dialog class="modal" id="projectModal" aria-labelledby="modalTitle" data-lenis-prevent>
+    <div class="modal__panel">
+      <div class="modal__bar"><button class="btn modal__close" type="button" id="modalClose" autofocus aria-label="Close project details">Close ✕</button></div>
+      <div id="modalBody"></div>
+    </div>
+  </dialog>
+
+  <template id="detail-nirvana">
+    <div class="modal__pic"><img src="assets/nirvana.jpg" width="1200" height="732" alt=""></div>
+    <p class="modal__tag">Smart India Hackathon · Flutter</p>
+    <h2 class="modal__title" id="modalTitle">NIRVANA</h2>
+    <p>An offline-first companionship and care-coordination app for elders, with a separate live portal for the family caregiver. Built with Flutter for the Smart India Hackathon, it runs fully offline for the elder and syncs to the cloud the moment a connection returns.</p>
+    <h3 class="modal__sub">Why it's built this way</h3>
+    <p>An elder with mild cognitive change should never have to fight an app. So it never diagnoses or scores, and never says "failed". There are no timers, touch targets are large, text is big and high-contrast, and the family sees participation trends rather than clinical judgements.</p>
+    <h3 class="modal__sub">What's inside</h3>
+    <ul class="checks">
+      <li>Offline reminders for medication, hydration and meals, scheduled on the device so they still fire in Android Doze mode, with Done · Snooze 15 min · Later today buttons right in the notification</li>
+      <li>Three gentle memory games: Remember Objects, Who Is This? (with cherished family photos) and Grocery Memory, each with hints that never penalise</li>
+      <li>"I'm Lost / I Need Help": one tap shares live location with the caregiver, who sees it on a map</li>
+      <li>Caregiver dashboard with a patient switcher, a 7-day participation chart, reminder compliance and sync health</li>
+      <li>Voice in and out (text-to-speech and speech-to-text) and several languages: English, हिन्दी, বাংলা, ଓଡ଼ିଆ, অসমীয়া and more</li>
+      <li>Offline-first sync: Hive on the device is the source of truth, and changes queue up and sync when the network is back</li>
+    </ul>
+    <p class="stack">Flutter · Dart · Hive · PostgreSQL · JavaScript</p>
+    <div class="modal__links">
+      <a class="btn btn--red" href="https://abhinav-s-biju.github.io/S_I_H/" target="_blank" rel="noopener">Live demo ↗</a>
+      <a class="btn" href="https://github.com/AbhiNav-S-Biju/S_I_H" target="_blank" rel="noopener">Code ↗</a>
+      <a class="link" href="https://github.com/AbhiNav-S-Biju/S_I_H/releases" target="_blank" rel="noopener">Android APK ↗</a>
+    </div>
+  </template>
+
+  <template id="detail-venma">
+    <div class="modal__pic"><img src="assets/venma-reading.jpg" width="800" height="500" alt=""></div>
+    <p class="modal__tag">Chrome extension · TypeScript</p>
+    <h2 class="modal__title" id="modalTitle">VENMA AI PDF Viewer</h2>
+    <p>A Chrome extension that turns PDF reading into a reading desk with a companion. Open a PDF, highlight as you read, and select any passage to ask VENMA, a lavender cat who lives on your desk, for an explanation, an example, a summary or study notes. Answers can be kept as notes pinned to the page.</p>
+    <h3 class="modal__sub">What it does</h3>
+    <ul class="checks">
+      <li>Open a file, drag one onto the desk, or load it from a URL, with page navigation, zoom and fit-to-width</li>
+      <li>Highlights in yellow, mint or pink, plus notes; every mark gets a sticky flag on the page edge</li>
+      <li>Ask VENMA to explain, explain in detail, give an example, summarise or write study notes, and each answer names the model that wrote it</li>
+      <li>Highlights and notes are saved in the browser and reattach when you reopen the same PDF</li>
+      <li>Export a copy of the PDF with your annotations; the original file is never modified</li>
+      <li>The cat breathes, blinks and follows your cursor, and holds still when your system asks for reduced motion</li>
+    </ul>
+    <h3 class="modal__sub">How it works</h3>
+    <p>The extension (React, pdf.js and pdf-lib) keeps annotations in IndexedDB and only sends the text you select. A small local Express server holds every API key and picks a model that's reachable: Ollama on your own computer, or OpenRouter, Groq or Gemini if configured. The extension itself never contains a key.</p>
+    <p class="stack">React · TypeScript · pdf.js · pdf-lib · IndexedDB · Express · Vite</p>
+    <div class="modal__links">
+      <a class="btn btn--red" href="https://github.com/AbhiNav-S-Biju/VENMA-AI-pdf-viewer" target="_blank" rel="noopener">Code ↗</a>
+    </div>
+  </template>
+
+  <template id="detail-digipass">
+    <div class="modal__pic"><img src="assets/digipass.jpg" width="1280" height="800" alt=""></div>
+    <p class="modal__tag">Full stack · Node &amp; PostgreSQL</p>
+    <h2 class="modal__title" id="modalTitle">DIGIPASS</h2>
+    <p>A digital estate manager. You keep a record of your digital accounts, name trusted executors, and DIGIPASS generates a digital will as a PDF. If you stop responding for a set period, a dead man's switch delivers it.</p>
+    <h3 class="modal__sub">What it does</h3>
+    <ul class="checks">
+      <li>Digital asset register for accounts across social media, email, finance, storage and entertainment</li>
+      <li>Executor portal: the people you name verify who they are and get controlled access, nothing more</li>
+      <li>Automatic digital will, generated as a PDF</li>
+      <li>Scheduled check-ins that trigger delivery if you don't respond in time</li>
+      <li>A full activity log of what was done and by whom</li>
+    </ul>
+    <h3 class="modal__sub">Security</h3>
+    <p>Passwords are hashed with bcrypt, sessions use JWTs that expire after 7 days, every database query is parameterised, and protected routes sit behind authentication middleware.</p>
+    <p class="stack">Node.js · Express · PostgreSQL (Neon) · node-cron · pdfkit &amp; Python · Nodemailer · Vercel</p>
+    <div class="modal__links">
+      <a class="btn btn--red" href="https://digipass-pi.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
+      <a class="btn" href="https://github.com/AbhiNav-S-Biju/Digipass" target="_blank" rel="noopener">Code ↗</a>
+    </div>
+  </template>
+
   <!-- Theme switch: drag it, or press it -->
   <button class="theme-handle" id="themeHandle" type="button">
     <span class="theme-handle__grip" aria-hidden="true"></span>
@@ -301,25 +358,12 @@
   </button>
   <canvas class="spray" id="spray" aria-hidden="true"></canvas>
 
-  <!-- Filter used by the slider for motion blur + colour split -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <filter id="bendFx" x="-10%" y="0" width="120%" height="100%" color-interpolation-filters="sRGB">
-      <feGaussianBlur id="bendBlur" in="SourceGraphic" stdDeviation="0 0" result="b" />
-      <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
-      <feOffset id="bendOffR" in="r" dx="0" result="ro" />
-      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g" />
-      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bl" />
-      <feOffset id="bendOffB" in="bl" dx="0" result="bo" />
-      <feBlend in="ro" in2="g" mode="screen" result="rg" />
-      <feBlend in="rg" in2="bo" mode="screen" />
-    </filter>
-  </svg>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/bend-slider.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/paper-mail.js"></script>
+  <script src="js/bend-slider.js?v=3"></script>
+  <script src="js/main.js?v=3"></script>
+  <script src="js/projects.js?v=3"></script>
+  <script src="js/paper-mail.js?v=3"></script>
 </body>
 </html>

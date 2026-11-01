@@ -91,12 +91,6 @@
     handle: handle,
     canvas: document.getElementById('spray'),
     reducedMotion: reduced,
-    filter: {
-      id: 'bendFx',
-      blur: document.getElementById('bendBlur'),
-      offR: document.getElementById('bendOffR'),
-      offB: document.getElementById('bendOffB')
-    },
     colors: function () {
       return [
         cssVar(root, '--dp-color-ink'),
@@ -105,14 +99,16 @@
         '#e2c25a'
       ];
     },
-    buildView: function () {
+    buildView: function (bleed) {
       // A copy of the page in the other theme, lined up with the current scroll.
+      // The slider's layer reaches `bleed` px past the viewport, so the copy sits that far in.
       var clone = page.cloneNode(true);
       clone.removeAttribute('id');
       clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
       clone.querySelectorAll('img[loading="lazy"]').forEach(function (img) { img.loading = 'eager'; });
       clone.setAttribute('data-theme', otherTheme());
-      clone.style.top = -window.scrollY + 'px';
+      clone.style.left = bleed + 'px';
+      clone.style.top = (bleed - window.scrollY) + 'px';
       clone.style.width = page.offsetWidth + 'px';
       return clone;
     },
@@ -218,24 +214,23 @@
   ST.batch('.thought, .process li, .speech, .ledger__row, .contact__actions', {
     start: 'clamp(top 90%)',
     onEnter: function (els) {
-      gsap.fromTo(els, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true });
+      gsap.fromTo(els, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true });
     }
   });
-  gsap.set('.thought, .process li, .speech, .ledger__row, .contact__actions', { autoAlpha: 0 });
+  // opacity rather than autoAlpha: hidden-by-visibility links (contact) couldn't be reached with Tab
+  gsap.set('.thought, .process li, .speech, .ledger__row, .contact__actions', { opacity: 0 });
 
-  // Project pictures drift against the text.
-  gsap.utils.toArray('.project').forEach(function (p) {
-    var vis = p.querySelector('.project__visual');
-    var body = p.querySelector('.project__body');
-    gsap.fromTo(vis, { y: 60 }, {
-      y: -40, ease: 'none',
-      scrollTrigger: { trigger: p, start: 'clamp(top bottom)', end: 'clamp(bottom top)', scrub: true }
-    });
-    gsap.from(body.children, {
-      autoAlpha: 0, x: -24, duration: 0.6, ease: 'power2.out', stagger: 0.06,
-      scrollTrigger: { trigger: body, start: 'clamp(top 82%)' }
-    });
+  // Project cards spring up in turn. Opacity (not visibility) so they stay reachable by keyboard.
+  ST.batch('.pcard', {
+    start: 'top 90%',
+    onEnter: function (els) {
+      gsap.fromTo(els, { opacity: 0, y: 90 }, {
+        opacity: 1, y: 0, duration: 0.85, ease: 'back.out(1.4)', stagger: 0.14,
+        overwrite: true, clearProps: 'opacity,transform'
+      });
+    }
   });
+  gsap.set('.pcard', { opacity: 0 });
 
   // The closing statement grows into place.
   gsap.fromTo('.contact__title', { scale: 0.86, autoAlpha: 0.2, transformOrigin: 'left center' }, {
