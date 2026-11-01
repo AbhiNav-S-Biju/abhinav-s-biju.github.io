@@ -56,6 +56,8 @@
     lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
     if (hasGsap) {
       lenis.on('scroll', window.ScrollTrigger.update);
+      // Pinning adds scroll length after Lenis measured the page; keep its limit in step.
+      window.ScrollTrigger.addEventListener('refresh', function () { lenis.resize(); });
       window.gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
       window.gsap.ticker.lagSmoothing(0);
     } else {
@@ -65,6 +67,12 @@
   } else if (!reduced()) {
     root.style.scrollBehavior = 'smooth';
   }
+
+  // Other scripts (the projects' jump buttons) scroll through this so Lenis stays in charge.
+  window.portfolioScrollTo = function (y) {
+    if (lenis) lenis.scrollTo(y, { duration: 1.3 });
+    else window.scrollTo({ top: y, behavior: reduced() ? 'auto' : 'smooth' });
+  };
 
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="#"]');
@@ -107,6 +115,10 @@
       clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
       clone.querySelectorAll('img[loading="lazy"]').forEach(function (img) { img.loading = 'eager'; });
       clone.setAttribute('data-theme', otherTheme());
+      // A pinned section is position:fixed; inside the offset copy it would land `bleed` px off.
+      clone.querySelectorAll('[style*="position: fixed"]').forEach(function (el) {
+        el.style.marginLeft = el.style.marginTop = bleed + 'px';
+      });
       clone.style.left = bleed + 'px';
       clone.style.top = (bleed - window.scrollY) + 'px';
       clone.style.width = page.offsetWidth + 'px';

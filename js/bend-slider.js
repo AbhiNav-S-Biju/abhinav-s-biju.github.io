@@ -9,7 +9,8 @@
  * Cost control: the blur is a plain CSS blur (GPU, works in every browser) and the
  * colour split is drawn on the canvas, instead of an SVG filter over the whole view,
  * which was slow on large screens and unsupported on HTML content in Safari. If frames
- * still come in slow, it drops to a lite mode (no blur, fewer dots) and stays there.
+ * are clearly slow for a whole drag, that drag drops to a lite mode (no blur, fewer dots,
+ * no second pencil pass). The colour split on the line always stays, it is cheap.
  *
  *   new BendSlider({
  *     handle,          // element that starts the drag (a <button>; click/Enter sweeps)
@@ -30,7 +31,9 @@
 
   var BLEED = 24;            // px the view extends past the viewport so a blur doesn't fade the edges
   var MAX_PARTICLES = 140;
-  var SLOW_FRAME_MS = 28;    // average frame time that triggers lite mode
+  var SLOW_FRAME_MS = 50;    // median frame time (about 20 fps) that triggers lite mode
+  var WARMUP_FRAMES = 15;    // building the copy of the page hitches the first frames; don't judge on them
+  var WINDOW_FRAMES = 20;
   var canBlur = !!(window.CSS && CSS.supports && CSS.supports('filter', 'blur(2px)'));
 
   function BendSlider(opts) {
@@ -45,7 +48,7 @@
     this.x = 0; this.prevX = 0; this.vel = 0; this.bend = 0;
     this.py = 0; this.target = null;
     this.suppressClick = false;
-    this.lite = false;        // set once frames prove slow; stays on for later drags
+    this.lite = false;        // set when a drag's frames prove slow; reset for every drag
     this._tick = this._tick.bind(this);
     this._bind();
   }
@@ -112,7 +115,7 @@
     this.vel = 0; this.bend = 0; this.py = py; this.target = null;
     this.stiffness = 0.16;
 
-    this.last = 0; this.ema = 0; this.frames = 0; this.blurNow = 0; this.clipNow = '';
+    this.last = 0; this.dts = []; this.frames = 0; this.blurNow = 0; this.clipNow = ''; this.lite = false;
     var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     this.canvas.width = this.W * dpr;
     this.canvas.height = this.H * dpr;
@@ -162,14 +165,19 @@
   BendSlider.prototype._tick = function (now) {
     var reduced = this._reduced();
     if (this.active) {
-      // Watch the frame rate while dragging; on a slow machine switch the heavy bits off.
-      if (this.last) {
-        var dt = now - this.last;
-        this.ema = this.ema ? this.ema * 0.85 + dt * 0.15 : dt;
-        if (++this.frames > 12 && this.ema > SLOW_FRAME_MS && !this.lite) {
-          this.lite = true;
-          this.fx.style.filter = 'none';
-          this.blurNow = 0;
+      var prevT = this.last;
+      // Watch the frame rate while dragging; if it is slow all the way through, switch the heavy bits off.
+      // The median (not an average) so one hitch can't tip it, and only after the warm-up frames.
+      if (this.last && ++this.frames > WARMUP_FRAMES && !this.lite) {
+        this.dts.push(now - this.last);
+        if (this.dts.length > WINDOW_FRAMES) this.dts.shift();
+        if (this.dts.length === WINDOW_FRAMES) {
+          var sorted = this.dts.slice().sort(function (a, b) { return a - b; });
+          if (sorted[WINDOW_FRAMES >> 1] > SLOW_FRAME_MS) {
+            this.lite = true;
+            this.fx.style.filter = 'none';
+            this.blurNow = 0;
+          }
         }
       }
       this.last = now;
@@ -178,7 +186,9 @@
         this.x = lerp(this.x, this.target, this.stiffness);
         if (Math.abs(this.x - this.target) < 0.6) this.x = this.target;
       }
-      var v = this.x - this.prevX;
+      // Speed in px per 60 Hz frame, whatever the screen's refresh rate: on a 120/144 Hz laptop the
+      // same drag moves fewer px per frame, which used to leave every effect below its threshold.
+      var v = (this.x - this.prevX) * (prevT ? 16.67 / clamp(now - prevT, 4, 50) : 1);
       this.prevX = this.x;
       this.vel = lerp(this.vel, v, 0.35);
       // The ends of the line trail behind the grabbed point.
@@ -286,7 +296,7 @@
     ctx.lineCap = 'round';
 
     // Colour split: a red and a blue ghost of the line, pulled apart by the drag speed.
-    var split = reduced || this.lite ? 0 : clamp(Math.abs(this.vel) * 0.45, 0, 10);
+    var split = reduced ? 0 : clamp(Math.abs(this.vel) * 0.45, 0, 10);
     if (split > 0.8) {
       ctx.save();
       ctx.lineWidth = 2 + split * 0.5;
