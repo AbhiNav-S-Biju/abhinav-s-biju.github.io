@@ -84,6 +84,8 @@
     var a = el('div', 'hsheet__col');
     var b = el('div', 'hsheet__col');
 
+    var medal = f.querySelector('.modal__medal');
+    if (medal) a.appendChild(el('p', 'hsheet__medal', medal.innerHTML));
     a.appendChild(el('p', 'hsheet__tag', f.querySelector('.modal__tag').innerHTML));
     a.appendChild(el('h3', 'hsheet__title', title.innerHTML));
     var pic = el('div', 'hsheet__pic');
@@ -126,8 +128,9 @@
     panels.push({ el: panel, card: wrap, sheet: sheet });
 
     var fullTitle = clone.querySelector('.card3d__open').textContent.trim();
+    var label = clone.querySelector('.card3d').dataset.label || fullTitle.split(' ')[0];
     var pill = el('button', 'hscroll__pill',
-      '<span class="hscroll__dot" aria-hidden="true"></span><span class="hscroll__label">' + fullTitle.split(' ')[0] + '</span>');
+      '<span class="hscroll__dot" aria-hidden="true"></span><span class="hscroll__label">' + label + '</span>');
     pill.type = 'button';
     pill.dataset.i = i;
     pill.setAttribute('aria-label', 'Go to ' + fullTitle);

@@ -223,14 +223,14 @@
   });
 
   // Content drops in as it arrives.
-  ST.batch('.thought, .process li, .speech, .ledger__row, .contact__actions', {
+  ST.batch('.thought, .process li, .ledger__row, .contact__actions', {
     start: 'clamp(top 90%)',
     onEnter: function (els) {
       gsap.fromTo(els, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true });
     }
   });
   // opacity rather than autoAlpha: hidden-by-visibility links (contact) couldn't be reached with Tab
-  gsap.set('.thought, .process li, .speech, .ledger__row, .contact__actions', { opacity: 0 });
+  gsap.set('.thought, .process li, .ledger__row, .contact__actions', { opacity: 0 });
 
   // Project cards spring up in turn. Opacity (not visibility) so they stay reachable by keyboard.
   ST.batch('.pcard', {

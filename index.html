@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abhinav S Biju</title>
-  <meta name="description" content="Abhinav S Biju — B.Tech CSIT student at REVA University. Projects, contributions and contact.">
+  <meta name="description" content="Abhinav S Biju — B.Tech CSIT student at REVA University. Projects, a hackathon win and contact.">
   <meta name="color-scheme" content="light dark">
   <script>
     // Pick the theme before first paint so there is no flash.
@@ -20,10 +20,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=16">
   <noscript><style>.loader{display:none}</style></noscript>
 </head>
 <body>
+
+  <!-- Medal, drawn once and reused on the card and in the details -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="medal" viewBox="0 0 48 64">
+      <path d="M9 2 L21 2 L29 30 L17 34 Z" style="fill:var(--dp-color-accent)" stroke="#38352f" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M39 2 L27 2 L19 30 L31 34 Z" style="fill:var(--dp-color-annotation)" stroke="#38352f" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="24" cy="43" r="17" fill="#efcf6b" stroke="#38352f" stroke-width="2"/>
+      <circle cx="24" cy="43" r="12.5" fill="none" stroke="#38352f" stroke-width="1.2" stroke-dasharray="2.4 2"/>
+      <path d="M24 33.5 L26.9 39.8 L33.7 40.5 L28.6 45 L30.1 51.7 L24 48.3 L17.9 51.7 L19.4 45 L14.3 40.5 L21.1 39.8 Z" fill="#9e3a2e" stroke="#38352f" stroke-width="1.2" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
 
   <!-- Loader -->
   <div class="loader" id="loader" role="status" aria-live="polite">
@@ -48,7 +59,6 @@
         <ul class="nav__links">
           <li><a href="#about">about</a></li>
           <li><a href="#projects">projects</a></li>
-          <li><a href="#contributions">contributions</a></li>
           <li><a href="#contact">contact</a></li>
         </ul>
       </nav>
@@ -93,9 +103,9 @@
         <div class="facts">
           <svg class="facts__bracket" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 26 C 6 12, 14 10, 40 11 L 280 12 C 292 12, 296 8, 300 3 C 304 8, 308 12, 320 12 L 560 11 C 586 11, 594 13, 596 26" /></svg>
           <dl class="facts__list">
-            <div><dt>3</dt><dd>projects on GitHub</dd></div>
+            <div><dt>4</dt><dd>projects you can read about here</dd></div>
             <div><dt>2</dt><dd>you can open live today</dd></div>
-            <div><dt>SIH</dt><dd>Smart India Hackathon build</dd></div>
+            <div><dt>1</dt><dd>hackathon won, HackFest 2026</dd></div>
             <div><dt>5+</dt><dd>languages I ship in</dd></div>
           </dl>
         </div>
@@ -117,6 +127,26 @@
         <p class="heading__note">from <a href="https://github.com/AbhiNav-S-Biju?tab=repositories" target="_blank" rel="noopener">github.com/AbhiNav-S-Biju</a> · click a card for the full story</p>
 
         <div class="projects__grid">
+          <!-- Secure Sphere (HackFest) -->
+          <div class="pcard">
+            <div class="card3d" data-project="hackfest" data-label="Secure Sphere">
+              <div class="card3d__inner">
+                <article class="card3d__body">
+                  <span class="tape tape--tl" aria-hidden="true"></span>
+                  <span class="card3d__item medal" style="--z:100px" role="img" aria-label="Hackathon winner"><svg viewBox="0 0 48 64" aria-hidden="true"><use href="#medal"/></svg></span>
+                  <div class="card3d__item card3d__pic" style="--z:80px">
+                    <img src="assets/hackfest-rules.jpg" width="1400" height="741" loading="lazy" alt="Secure Sphere live dashboard: a request-flow diagram, a feed of blocked attacks, and two rules the AI analyst learned">
+                  </div>
+                  <h3 class="card3d__item card3d__title" style="--z:50px"><button type="button" class="card3d__open" aria-haspopup="dialog">Secure Sphere</button></h3>
+                  <div class="card3d__row">
+                    <span class="card3d__item card3d__hint" style="--z:20px" aria-hidden="true">winner →</span>
+                    <div class="card3d__item" style="--z:20px"><button type="button" class="btn btn--red" aria-haspopup="dialog">See details</button></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
           <!-- NIRVANA -->
           <div class="pcard">
             <div class="card3d" data-project="nirvana">
@@ -185,19 +215,6 @@
           <li><span class="circled" aria-hidden="true">3</span><strong>Keep secrets on the server</strong> Keys and passwords stay out of the client.</li>
           <li><span class="circled" aria-hidden="true">4</span><strong>Ship something you can open</strong> A live link or an APK, not just a repo.</li>
         </ol>
-      </section>
-
-      <!-- Contributions -->
-      <section class="contrib" id="contributions" aria-labelledby="contrib-title">
-        <h2 class="heading" id="contrib-title"><span class="marker">Contributions</span></h2>
-        <p class="heading__note">work on repositories that aren't mine</p>
-        <div class="contrib__list">
-          <article class="speech">
-            <p class="speech__repo"><a href="https://github.com/jrush-vj/hackstreet-boys" target="_blank" rel="noopener">jrush-vj / hackstreet-boys</a></p>
-            <p>Team repository — added as a collaborator and pushing to the shared codebase with the rest of the team.</p>
-            <p class="stack">Collaborator · team project</p>
-          </article>
-        </div>
       </section>
 
       <!-- Toolbox -->
@@ -282,6 +299,34 @@
     </div>
   </dialog>
 
+  <template id="detail-hackfest">
+    <div class="modal__pic"><img src="assets/hackfest-rules.jpg" width="1400" height="741" alt=""></div>
+    <p class="modal__medal"><svg viewBox="0 0 48 64" aria-hidden="true"><use href="#medal"/></svg><span>Hackathon winner · HackFest 2026</span></p>
+    <p class="modal__tag">24-hour hackathon · Python &amp; React</p>
+    <h2 class="modal__title" id="modalTitle">Secure Sphere</h2>
+    <p>Secure Sphere is a zero-day detection gateway built in 24 hours: every request to a demo bank gets a safe, divert or deny verdict.</p>
+    <h3 class="modal__sub">What I built</h3>
+    <p>Team Hackstreet Boys had three of us. Jerush led integration, Akchhat built the app and the UI, and I owned detection.</p>
+    <ul class="checks">
+      <li>The gateway: gives every request a SAFE, DIVERT or DENY verdict, tested to stay under 5 ms</li>
+      <li>Rule packs for SQL, prompt and log injection, open admin routes and login bursts</li>
+      <li>Anomaly scoring that flags attacks no rule covers yet</li>
+      <li>The sandbox that safely replays diverted requests for the AI analyst</li>
+      <li>A labelled corpus of 100+ benign and malicious requests, used to keep false alarms away</li>
+      <li>The web pages of VulnBank, the deliberately weak demo bank that judges could click through</li>
+    </ul>
+    <h3 class="modal__sub">How it works</h3>
+    <p>Signature-based defences only block attacks they already know. Secure Sphere catches the unknown request, sends it to a honeypot and a sandbox, and lets an AI analyst turn what it saw into a new rule. The gateway then denies the next similar request, about a second after the first was seen. Every block is tagged with an OWASP Top 10:2025 category on a live dashboard.</p>
+    <div class="modal__gallery">
+      <figure><img src="assets/hackfest-flow.jpg" width="1116" height="592" loading="lazy" alt="Request-flow diagram: the gateway check sends a request to the real app, to a deny, or to a honeypot and sandbox where the AI learns a new rule"><figcaption>The request flow</figcaption></figure>
+      <figure><img src="assets/hackfest-dashboard.jpg" width="1400" height="746" loading="lazy" alt="Dashboard during a prompt-injection attack: the attacker is trapped in the honeypot while the analyst learns"><figcaption>An attacker caught in the honeypot</figcaption></figure>
+    </div>
+    <p class="stack">Python · FastAPI · Redis · PostgreSQL · React · TypeScript · Tailwind · Docker Compose</p>
+    <div class="modal__links">
+      <span class="modal__note">Private team repo, so no public link. Ask me for a walkthrough.</span>
+    </div>
+  </template>
+
   <template id="detail-nirvana">
     <div class="modal__pic"><img src="assets/nirvana.jpg" width="1200" height="732" alt=""></div>
     <p class="modal__tag">Smart India Hackathon · Flutter</p>
@@ -362,8 +407,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="js/bend-slider.js?v=11"></script>
-  <script src="js/main.js?v=9"></script>
-  <script src="js/hscroll.js?v=9"></script>
+  <script src="js/main.js?v=12"></script>
+  <script src="js/hscroll.js?v=12"></script>
   <script src="js/projects.js?v=4"></script>
   <script src="js/paper-mail.js?v=4"></script>
 </body>
