@@ -159,9 +159,39 @@ h1, h2, h3 { font-family: var(--dp-typography-display-face); font-weight: 400; m
 .nav__links a { color: var(--dp-color-ink-muted); text-decoration: none; font-size: 20px; }
 .nav__links a:hover { color: var(--dp-color-accent); text-decoration: underline wavy; }
 @media (max-width: 560px) {
-  .nav__links li:nth-child(3) { display: none; }
   .nav__links a { font-size: 19px; }
 }
+.nav > nav { margin-left: auto; }
+
+/* cursor on/off: only shown where the effect can run (mouse or trackpad, motion allowed) */
+.nav__cursor {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 40px; padding: 0 6px;
+  background: none; border: 0;
+  font: inherit; font-size: 20px; color: var(--dp-color-ink-muted);
+  cursor: pointer;
+}
+.nav__cursor[hidden] { display: none; }
+.nav__cursor:hover { color: var(--dp-color-accent); }
+.nav__cursor-dot {
+  width: 13px; height: 13px; flex: none;
+  border: var(--dp-border-fine-stroke) solid currentColor;
+  border-radius: 52% 46% 55% 47% / 47% 55% 45% 52%;
+}
+.nav__cursor[aria-pressed="true"] .nav__cursor-dot { background: currentColor; }
+
+/* Velocity Squish: an overlay dot; the system cursor stays as it is */
+.squish {
+  position: fixed; left: 0; top: 0; z-index: 2147483000;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+  will-change: transform;
+}
+.squish.is-on { opacity: 1; }
 
 /* ============ Layout ============ */
 main > section {
